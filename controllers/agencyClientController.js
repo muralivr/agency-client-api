@@ -3,6 +3,9 @@ const Client = require("../models/Client");
 
 // Create Agency and Clients
 exports.createAgencyAndClients = async (req, res) => {
+  const { error } = createAgencyAndClientsValidation.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
   const { agency, clients } = req.body;
 
   try {
@@ -23,6 +26,9 @@ exports.createAgencyAndClients = async (req, res) => {
 
 // Update Client
 exports.updateClient = async (req, res) => {
+  const { error } = updateClientValidation.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
   const { id } = req.params;
   const { name, email, phoneNumber, totalBill } = req.body;
 
